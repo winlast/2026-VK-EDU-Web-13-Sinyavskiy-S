@@ -1,0 +1,50 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Настройки профиля{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-3">Настройки{% if user.is_authenticated %}: {{ user.username }}{% endif %}</h1>
+<form class="form-card" action="{% url 'profile' %}" method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    <div class="row mb-3">
+        <label for="profileLogin" class="col-sm-3 col-form-label">Логин</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="profileLogin" name="login" value="{{ user.username }}" maxlength="30" disabled aria-describedby="profileLoginHelp">
+            <div id="profileLoginHelp" class="form-text">Логин изменить нельзя.</div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="profileEmail" class="col-sm-3 col-form-label">Email</label>
+        <div class="col-sm-9">
+            <input type="email" class="form-control" id="profileEmail" name="email" value="{{ user.email }}" maxlength="254" aria-describedby="profileEmailHelp">
+            <div id="profileEmailHelp" class="form-text">На него придут уведомления о новых ответах.</div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="profileNick" class="col-sm-3 col-form-label">Никнейм</label>
+        <div class="col-sm-9">
+            <input type="text" class="form-control" id="profileNick" name="nickname" value="{{ user.first_name }}" maxlength="40" aria-describedby="profileNickHelp">
+            <div id="profileNickHelp" class="form-text">До 40 символов.</div>
+        </div>
+    </div>
+    <div class="row mb-4">
+        <span class="col-sm-3 col-form-label">Аватар</span>
+        <div class="col-sm-9">
+            <div class="d-flex flex-wrap align-items-end gap-3">
+                <img src="{% static 'core/img/bmstu.jpg' %}" class="profile-avatar" alt="Текущий аватар">
+                <div class="flex-grow-1">
+                    <label for="profileAvatar" class="form-label">Загрузить новый</label>
+                    <input type="file" class="form-control" id="profileAvatar" name="avatar" accept="image/png, image/jpeg" aria-describedby="profileAvatarHelp">
+                    <div id="profileAvatarHelp" class="form-text">PNG или JPG до 2 МБ.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-9 offset-sm-3">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        </div>
+    </div>
+</form>
+{% endblock %}
