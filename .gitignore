@@ -9,13 +9,25 @@ desktop.ini
 .vscode/
 *.swp
 
+# Виртуальное окружение
+venv/
+.venv/
+
 # Python
 __pycache__/
 *.py[cod]
 
-# Логи и базы
-*.log
+# Django
+db.sqlite3
 *.sqlite3
+/media/
+/static/
+
+# Переменные окружения (пример лежит в .env.example)
+.env
+
+# Логи
+*.log
 
 # Зависимости и сборка
 node_modules/
