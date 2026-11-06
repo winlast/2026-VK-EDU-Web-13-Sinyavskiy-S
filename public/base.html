@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Главная — BMSTU Forum</title>
+    <link rel="icon" type="image/svg+xml" href="static/img/favicon.svg">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+<header class="site-header navbar navbar-expand-lg navbar-dark py-2">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="static/img/favicon.svg" alt="">
+            BMSTU Forum
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#headerMenu" aria-controls="headerMenu" aria-expanded="false" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse gap-3" id="headerMenu">
+            <form class="header-search d-flex mx-lg-auto my-2 my-lg-0" role="search" action="index.html">
+                <input class="form-control" type="search" name="q" placeholder="Поиск по вопросам" aria-label="Поиск" maxlength="100">
+            </form>
+            <a href="ask.html" class="btn btn-warning btn-ask">Задать вопрос</a>
+            <div class="user-block">
+                <a href="login.html" class="btn btn-sm btn-outline-light">Войти</a>
+                <a href="signup.html" class="btn btn-sm btn-light text-primary">Регистрация</a>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container flex-grow-1 py-4">
+    <div class="row g-4">
+        <main class="col-lg-9">
+            <h1 class="h3">Заголовок страницы</h1>
+            <p class="text-secondary">Здесь будет контент конкретной страницы.</p>
+        </main>
+        <aside class="col-lg-3 d-flex flex-column gap-3">
+            <section class="sidebar-block">
+                <h5>Популярные теги</h5>
+                <ul class="tags tags--cloud">
+                    <li><a href="tag.html" class="tag-big">python</a></li>
+                    <li><a href="tag.html">django</a></li>
+                    <li><a href="tag.html" class="tag-big">сессия</a></li>
+                    <li><a href="tag.html">ИУ5</a></li>
+                    <li><a href="tag.html">технопарк</a></li>
+                    <li><a href="tag.html" class="tag-big">матан</a></li>
+                    <li><a href="tag.html">общага</a></li>
+                    <li><a href="tag.html">c++</a></li>
+                    <li><a href="tag.html">mysql</a></li>
+                    <li><a href="tag.html">стипендия</a></li>
+                </ul>
+            </section>
+            <section class="sidebar-block">
+                <h5>Лучшие участники</h5>
+                <ul class="members">
+                    <li><a href="#"><img src="static/img/avatar-1.svg" alt="">Анна Королёва</a></li>
+                    <li><a href="#"><img src="static/img/avatar-2.svg" alt="">Максим Петров</a></li>
+                    <li><a href="#"><img src="static/img/avatar-3.svg" alt="">Илья Смирнов</a></li>
+                    <li><a href="#"><img src="static/img/avatar-4.svg" alt="">Екатерина Волкова</a></li>
+                    <li><a href="#"><img src="static/img/avatar-5.svg" alt="">Дмитрий Романов</a></li>
+                </ul>
+            </section>
+        </aside>
+    </div>
+</div>
+<footer class="site-footer mt-auto py-3">
+    <div class="container d-flex flex-wrap justify-content-between gap-2">
+        <span>© 2026 BMSTU Forum — учебный проект VK Education</span>
+        <a href="index.html">На главную</a>
+    </div>
+</footer>
+<script src="static/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
