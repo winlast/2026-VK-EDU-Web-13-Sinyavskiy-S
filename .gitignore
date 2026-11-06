@@ -1,0 +1,23 @@
+# ОС
+.DS_Store
+Thumbs.db
+desktop.ini
+*:Zone.Identifier
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Логи и базы
+*.log
+*.sqlite3
+
+# Зависимости и сборка
+node_modules/
+dist/
+build/
