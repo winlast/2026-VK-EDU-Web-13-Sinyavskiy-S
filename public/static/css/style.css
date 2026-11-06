@@ -1,0 +1,317 @@
+:root {
+    --forum-blue: #0b5ed7;
+    --forum-blue-dark: #0a4fb4;
+    --forum-bg: #f4f6fb;
+    --forum-border: #dfe3ec;
+}
+
+body {
+    background: var(--forum-bg);
+}
+
+/* ---------- Шапка ---------- */
+
+.site-header {
+    background: var(--forum-blue);
+}
+
+.site-header .navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.4rem;
+}
+
+.site-header .navbar-brand img {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+}
+
+.site-header .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.site-header .navbar-toggler-icon {
+    filter: invert(1);
+}
+
+.header-search {
+    flex-grow: 1;
+    max-width: 420px;
+}
+
+.header-search .form-control {
+    border-radius: 20px;
+}
+
+.btn-ask {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.user-block {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+}
+
+.user-block img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    object-fit: cover;
+}
+
+.user-block__name {
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.user-block a {
+    color: #e3ecff;
+    font-size: 0.9rem;
+}
+
+.user-block a:hover {
+    color: #fff;
+}
+
+/* ---------- Карточки вопросов и ответов ---------- */
+
+.page-title {
+    margin-bottom: 0;
+}
+
+.min-w-0 {
+    min-width: 0;
+}
+
+.question-card,
+.answer-card,
+.question-full {
+    background: #fff;
+    border: 1px solid var(--forum-border);
+    border-radius: 12px;
+}
+
+.question-card__avatar,
+.answer-card__avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.question-full__avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.question-card__title {
+    font-size: 1.15rem;
+    margin-bottom: 4px;
+}
+
+.question-card__title a {
+    color: #1d2a44;
+    text-decoration: none;
+}
+
+.question-card__title a:hover {
+    color: var(--forum-blue);
+}
+
+/* длинный текст без пробелов не ломает карточку */
+.question-card__title,
+.question-card__text,
+.question-full__text,
+.answer-card__text {
+    overflow-wrap: anywhere;
+}
+
+.question-card__text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: #4a5568;
+}
+
+.question-meta {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* ---------- Лайки ---------- */
+
+.vote {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    width: 64px;
+}
+
+.vote__btn {
+    width: 36px;
+    height: 30px;
+    padding: 0;
+    line-height: 1;
+}
+
+.vote__count {
+    font-weight: 700;
+}
+
+/* ---------- Теги ---------- */
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.tags a {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    background: #e7efff;
+    color: var(--forum-blue-dark);
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+
+.tags a:hover {
+    background: var(--forum-blue);
+    color: #fff;
+}
+
+.tags--cloud a {
+    font-size: 0.95rem;
+}
+
+.tags--cloud .tag-big {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* ---------- Правая колонка ---------- */
+
+.sidebar-block {
+    background: #fff;
+    border: 1px solid var(--forum-border);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.sidebar-block h5 {
+    margin-bottom: 12px;
+}
+
+.members {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.members li + li {
+    margin-top: 8px;
+}
+
+.members a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #1d2a44;
+    text-decoration: none;
+}
+
+.members a:hover {
+    color: var(--forum-blue);
+}
+
+.members img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+}
+
+/* ---------- Ответы ---------- */
+
+.answer-card--correct {
+    border-color: #198754;
+    box-shadow: 0 0 0 1px #198754;
+}
+
+/* ---------- Формы ---------- */
+
+.form-card {
+    background: #fff;
+    border: 1px solid var(--forum-border);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 1px solid var(--forum-border);
+}
+
+/* ---------- Подвал ---------- */
+
+.site-footer {
+    background: #1d2a44;
+    color: #c5cfe4;
+    font-size: 0.9rem;
+}
+
+.site-footer a {
+    color: #fff;
+}
+
+/* ---------- Адаптив ---------- */
+
+@media (max-width: 991.98px) {
+    .header-search {
+        max-width: none;
+    }
+
+    .user-block {
+        padding-top: 8px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .question-card__avatar,
+    .answer-card__avatar {
+        width: 44px;
+        height: 44px;
+    }
+
+    .question-full__avatar {
+        width: 64px;
+        height: 64px;
+    }
+
+    .vote {
+        width: 44px;
+    }
+
+    .form-card {
+        padding: 16px;
+    }
+}
