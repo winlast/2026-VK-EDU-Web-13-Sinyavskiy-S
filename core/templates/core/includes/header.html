@@ -1,0 +1,37 @@
+{% load static %}
+<header class="site-header navbar navbar-expand-lg navbar-dark py-2">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'index' %}">
+            <img src="{% static 'core/img/favicon.svg' %}" alt="">
+            BMSTU Forum
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#headerMenu" aria-controls="headerMenu" aria-expanded="false" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse gap-3" id="headerMenu">
+            <form class="header-search d-flex mx-lg-auto my-2 my-lg-0" role="search" action="{% url 'index' %}">
+                <input class="form-control" type="search" name="q" placeholder="Поиск по вопросам" aria-label="Поиск" maxlength="100">
+            </form>
+            <a href="{% url 'ask' %}" class="btn btn-warning btn-ask">Задать вопрос</a>
+            {% if user.is_authenticated %}
+                <div class="user-block">
+                    <img src="{% static 'core/img/bmstu.jpg' %}" alt="Аватар пользователя">
+                    <div>
+                        <div class="user-block__name">{{ user.username }}</div>
+                        <a href="{% url 'profile' %}">Настройки</a>
+                        <span class="mx-1">·</span>
+                        <form action="{% url 'logout' %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-link">Выйти</button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+                <div class="user-block">
+                    <a href="{% url 'login' %}" class="btn btn-sm btn-outline-light">Войти</a>
+                    <a href="{% url 'signup' %}" class="btn btn-sm btn-light text-primary">Регистрация</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</header>

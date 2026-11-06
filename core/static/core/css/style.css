@@ -1,0 +1,217 @@
+:root {
+    --forum-blue: #0b5ed7;
+    --forum-blue-dark: #0a4fb4;
+    --forum-bg: #f4f6fb;
+    --forum-border: #dfe3ec;
+}
+
+body {
+    background: var(--forum-bg);
+}
+
+.min-w-0 {
+    min-width: 0;
+}
+
+.page-title {
+    margin-bottom: 0;
+}
+
+/* ---------- Шапка ---------- */
+
+.site-header {
+    background: var(--forum-blue);
+}
+
+.site-header .navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.4rem;
+}
+
+.site-header .navbar-brand img {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+}
+
+.site-header .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.site-header .navbar-toggler-icon {
+    filter: invert(1);
+}
+
+.header-search {
+    flex-grow: 1;
+    max-width: 420px;
+}
+
+.header-search .form-control {
+    border-radius: 20px;
+}
+
+.btn-ask {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.user-block {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+}
+
+.user-block img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    object-fit: cover;
+}
+
+.user-block__name {
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.user-block a,
+.user-block .btn-link {
+    color: #e3ecff;
+    font-size: 0.9rem;
+}
+
+.user-block a:hover,
+.user-block .btn-link:hover {
+    color: #fff;
+}
+
+.user-block .btn-link {
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    text-decoration: underline;
+}
+
+/* ---------- Теги ---------- */
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.tags a {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    background: #e7efff;
+    color: var(--forum-blue-dark);
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+
+.tags a:hover {
+    background: var(--forum-blue);
+    color: #fff;
+}
+
+.tags--cloud a {
+    font-size: 0.95rem;
+}
+
+/* ---------- Правая колонка ---------- */
+
+.sidebar-block {
+    background: #fff;
+    border: 1px solid var(--forum-border);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.sidebar-block h5 {
+    margin-bottom: 12px;
+}
+
+.members {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.members li + li {
+    margin-top: 8px;
+}
+
+.members a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #1d2a44;
+    text-decoration: none;
+}
+
+.members a:hover {
+    color: var(--forum-blue);
+}
+
+.members img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+}
+
+/* ---------- Формы ---------- */
+
+.form-card {
+    background: #fff;
+    border: 1px solid var(--forum-border);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 1px solid var(--forum-border);
+}
+
+/* ---------- Подвал ---------- */
+
+.site-footer {
+    background: #1d2a44;
+    color: #c5cfe4;
+    font-size: 0.9rem;
+}
+
+.site-footer a {
+    color: #fff;
+}
+
+/* ---------- Адаптив ---------- */
+
+@media (max-width: 991.98px) {
+    .header-search {
+        max-width: none;
+    }
+
+    .user-block {
+        padding-top: 8px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .form-card {
+        padding: 16px;
+    }
+}

@@ -1,0 +1,24 @@
+{% load static %}
+<aside class="col-lg-3 d-flex flex-column gap-3">
+    <section class="sidebar-block">
+        <h5>Популярные теги</h5>
+        <ul class="tags tags--cloud">
+            {% for tag_name in popular_tags %}
+                <li><a href="{% url 'tag' tag_name %}">{{ tag_name }}</a></li>
+            {% endfor %}
+        </ul>
+    </section>
+    <section class="sidebar-block">
+        <h5>Лучшие участники</h5>
+        <ul class="members">
+            {% for member in best_members %}
+                <li>
+                    <a href="#">
+                        <img src="{% static member.avatar %}" alt="">
+                        {{ member.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+</aside>
