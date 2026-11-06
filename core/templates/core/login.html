@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-9 col-xl-7">
+        <h1 class="h3 mb-3">Вход</h1>
+        <form class="form-card" action="{% url 'login' %}" method="post" novalidate>
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="loginName" class="form-label">Логин</label>
+                <input type="text" class="form-control" id="loginName" name="login" maxlength="30" autocomplete="username">
+            </div>
+            <div class="mb-4">
+                <label for="loginPassword" class="form-label">Пароль</label>
+                <input type="password" class="form-control" id="loginPassword" name="password" maxlength="128" autocomplete="current-password" aria-describedby="loginPasswordHelp">
+                <div id="loginPasswordHelp" class="form-text">Пароль чувствителен к регистру.</div>
+            </div>
+            <div class="d-flex flex-wrap align-items-center gap-3">
+                <button type="submit" class="btn btn-primary">Войти</button>
+                <span>Нет аккаунта? <a href="{% url 'signup' %}">Зарегистрируйтесь</a></span>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

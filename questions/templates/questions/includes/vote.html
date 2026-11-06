@@ -1,0 +1,5 @@
+<div class="vote">
+    <button type="button" class="btn btn-sm {% if item.vote == 'up' %}btn-success{% else %}btn-outline-success{% endif %} vote__btn" aria-label="Нравится" aria-pressed="{% if item.vote == 'up' %}true{% else %}false{% endif %}">▲</button>
+    <span class="vote__count">{{ item.rating }}</span>
+    <button type="button" class="btn btn-sm {% if item.vote == 'down' %}btn-danger{% else %}btn-outline-danger{% endif %} vote__btn" aria-label="Не нравится" aria-pressed="{% if item.vote == 'down' %}true{% else %}false{% endif %}">▼</button>
+</div>

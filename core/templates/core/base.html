@@ -1,0 +1,27 @@
+{% load static %}<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Вопросы и ответы{% endblock %} — BMSTU Forum</title>
+    <link rel="icon" type="image/svg+xml" href="{% static 'core/img/favicon.svg' %}">
+    <link rel="stylesheet" href="{% static 'core/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    {% block styles %}{% endblock %}
+</head>
+<body class="d-flex flex-column min-vh-100">
+{% include 'core/includes/header.html' %}
+
+<div class="container flex-grow-1 py-4">
+    <div class="row g-4">
+        <main class="col-lg-9">
+            {% block content %}{% endblock %}
+        </main>
+        {% include 'core/includes/sidebar.html' %}
+    </div>
+</div>
+
+{% include 'core/includes/footer.html' %}
+<script src="{% static 'core/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
