@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Новый вопрос — BMSTU Forum</title>
+    <link rel="icon" type="image/svg+xml" href="static/img/favicon.svg">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+<header class="site-header navbar navbar-expand-lg navbar-dark py-2">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="static/img/favicon.svg" alt="">
+            BMSTU Forum
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#headerMenu" aria-controls="headerMenu" aria-expanded="false" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse gap-3" id="headerMenu">
+            <form class="header-search d-flex mx-lg-auto my-2 my-lg-0" role="search" action="index.html">
+                <input class="form-control" type="search" name="q" placeholder="Поиск по вопросам" aria-label="Поиск" maxlength="100">
+            </form>
+            <a href="ask.html" class="btn btn-warning btn-ask">Задать вопрос</a>
+            <div class="user-block">
+                <a href="login.html" class="btn btn-sm btn-outline-light">Войти</a>
+                <a href="signup.html" class="btn btn-sm btn-light text-primary">Регистрация</a>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container flex-grow-1 py-4">
+    <div class="row g-4">
+        <main class="col-lg-9">
+            <h1 class="h3 mb-3">Новый вопрос</h1>
+            <form class="form-card" action="ask.html" method="post" novalidate>
+                <div class="alert alert-danger" role="alert">
+                    Вопрос не сохранён: исправьте ошибки в форме.
+                </div>
+                <div class="mb-3">
+                    <label for="askTitle" class="form-label">Заголовок</label>
+                    <input type="text" class="form-control is-invalid" id="askTitle" name="title" maxlength="120" value="Помогите" aria-describedby="askTitleHelp askTitleError">
+                    <div id="askTitleError" class="invalid-feedback">Заголовок слишком короткий — минимум 10 символов.</div>
+                    <div id="askTitleHelp" class="form-text">Кратко опишите суть проблемы, от 10 до 120 символов.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="askText" class="form-label">Текст вопроса</label>
+                    <textarea class="form-control" id="askText" name="text" rows="8" maxlength="5000" aria-describedby="askTextHelp"></textarea>
+                    <div id="askTextHelp" class="form-text">Расскажите подробности: что делали и что не получилось. До 5000 символов.</div>
+                </div>
+                <div class="mb-4">
+                    <label for="askTags" class="form-label">Теги</label>
+                    <input type="text" class="form-control" id="askTags" name="tags" maxlength="100" placeholder="python, django" aria-describedby="askTagsHelp">
+                    <div id="askTagsHelp" class="form-text">Не больше 3 тегов через запятую.</div>
+                </div>
+                <button type="submit" class="btn btn-primary">Опубликовать</button>
+            </form>
+        </main>
+        <aside class="col-lg-3 d-flex flex-column gap-3">
+            <section class="sidebar-block">
+                <h5>Популярные теги</h5>
+                <ul class="tags tags--cloud">
+                    <li><a href="tag.html" class="tag-big">python</a></li>
+                    <li><a href="tag.html">django</a></li>
+                    <li><a href="tag.html" class="tag-big">сессия</a></li>
+                    <li><a href="tag.html">ИУ5</a></li>
+                    <li><a href="tag.html">технопарк</a></li>
+                    <li><a href="tag.html" class="tag-big">матан</a></li>
+                    <li><a href="tag.html">общага</a></li>
+                    <li><a href="tag.html">c++</a></li>
+                    <li><a href="tag.html">mysql</a></li>
+                    <li><a href="tag.html">стипендия</a></li>
+                </ul>
+            </section>
+            <section class="sidebar-block">
+                <h5>Лучшие участники</h5>
+                <ul class="members">
+                    <li><a href="#"><img src="static/img/avatar-1.svg" alt="">Анна Королёва</a></li>
+                    <li><a href="#"><img src="static/img/avatar-2.svg" alt="">Максим Петров</a></li>
+                    <li><a href="#"><img src="static/img/avatar-3.svg" alt="">Илья Смирнов</a></li>
+                    <li><a href="#"><img src="static/img/avatar-4.svg" alt="">Екатерина Волкова</a></li>
+                    <li><a href="#"><img src="static/img/avatar-5.svg" alt="">Дмитрий Романов</a></li>
+                </ul>
+            </section>
+        </aside>
+    </div>
+</div>
+<footer class="site-footer mt-auto py-3">
+    <div class="container d-flex flex-wrap justify-content-between gap-2">
+        <span>© 2026 BMSTU Forum — учебный проект VK Education</span>
+        <a href="index.html">На главную</a>
+    </div>
+</footer>
+<script src="static/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

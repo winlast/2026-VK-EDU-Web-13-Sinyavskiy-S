@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Настройки профиля — BMSTU Forum</title>
+    <link rel="icon" type="image/svg+xml" href="static/img/favicon.svg">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+<header class="site-header navbar navbar-expand-lg navbar-dark py-2">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="static/img/favicon.svg" alt="">
+            BMSTU Forum
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#headerMenu" aria-controls="headerMenu" aria-expanded="false" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse gap-3" id="headerMenu">
+            <form class="header-search d-flex mx-lg-auto my-2 my-lg-0" role="search" action="index.html">
+                <input class="form-control" type="search" name="q" placeholder="Поиск по вопросам" aria-label="Поиск" maxlength="100">
+            </form>
+            <a href="ask.html" class="btn btn-warning btn-ask">Задать вопрос</a>
+            <div class="user-block">
+                <img src="static/img/bmstu.jpg" alt="Аватар пользователя">
+                <div>
+                    <div class="user-block__name">Станислав</div>
+                    <a href="profile.html">Настройки</a>
+                    <span class="mx-1">·</span>
+                    <a href="index.html">Выйти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container flex-grow-1 py-4">
+    <div class="row g-4">
+        <main class="col-lg-9">
+            <h1 class="h3 mb-3">Настройки: Станислав</h1>
+            <form class="form-card" action="profile.html" method="post" enctype="multipart/form-data" novalidate>
+                <div class="alert alert-danger" role="alert">
+                    Изменения не сохранены: проверьте поля формы.
+                </div>
+                <div class="row mb-3">
+                    <label for="profileLogin" class="col-sm-3 col-form-label">Логин</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="profileLogin" name="login" value="winlast" maxlength="30" disabled aria-describedby="profileLoginHelp">
+                        <div id="profileLoginHelp" class="form-text">Логин изменить нельзя.</div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="profileEmail" class="col-sm-3 col-form-label">Email</label>
+                    <div class="col-sm-9">
+                        <input type="email" class="form-control is-invalid" id="profileEmail" name="email" value="stanislav@@mail.ru" maxlength="254" aria-describedby="profileEmailError">
+                        <div id="profileEmailError" class="invalid-feedback">Введите корректный email.</div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="profileNick" class="col-sm-3 col-form-label">Никнейм</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="profileNick" name="nickname" value="Станислав" maxlength="40" aria-describedby="profileNickHelp">
+                        <div id="profileNickHelp" class="form-text">До 40 символов.</div>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <span class="col-sm-3 col-form-label">Аватар</span>
+                    <div class="col-sm-9">
+                        <div class="d-flex flex-wrap align-items-end gap-3">
+                            <img src="static/img/bmstu.jpg" class="profile-avatar" alt="Текущий аватар">
+                            <div class="flex-grow-1">
+                                <label for="profileAvatar" class="form-label">Загрузить новый</label>
+                                <input type="file" class="form-control" id="profileAvatar" name="avatar" accept="image/png, image/jpeg" aria-describedby="profileAvatarHelp">
+                                <div id="profileAvatarHelp" class="form-text">PNG или JPG до 2 МБ.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-9 offset-sm-3">
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                    </div>
+                </div>
+            </form>
+        </main>
+        <aside class="col-lg-3 d-flex flex-column gap-3">
+            <section class="sidebar-block">
+                <h5>Популярные теги</h5>
+                <ul class="tags tags--cloud">
+                    <li><a href="tag.html" class="tag-big">python</a></li>
+                    <li><a href="tag.html">django</a></li>
+                    <li><a href="tag.html" class="tag-big">сессия</a></li>
+                    <li><a href="tag.html">ИУ5</a></li>
+                    <li><a href="tag.html">технопарк</a></li>
+                    <li><a href="tag.html" class="tag-big">матан</a></li>
+                    <li><a href="tag.html">общага</a></li>
+                    <li><a href="tag.html">c++</a></li>
+                    <li><a href="tag.html">mysql</a></li>
+                    <li><a href="tag.html">стипендия</a></li>
+                </ul>
+            </section>
+            <section class="sidebar-block">
+                <h5>Лучшие участники</h5>
+                <ul class="members">
+                    <li><a href="#"><img src="static/img/avatar-1.svg" alt="">Анна Королёва</a></li>
+                    <li><a href="#"><img src="static/img/avatar-2.svg" alt="">Максим Петров</a></li>
+                    <li><a href="#"><img src="static/img/avatar-3.svg" alt="">Илья Смирнов</a></li>
+                    <li><a href="#"><img src="static/img/avatar-4.svg" alt="">Екатерина Волкова</a></li>
+                    <li><a href="#"><img src="static/img/avatar-5.svg" alt="">Дмитрий Романов</a></li>
+                </ul>
+            </section>
+        </aside>
+    </div>
+</div>
+<footer class="site-footer mt-auto py-3">
+    <div class="container d-flex flex-wrap justify-content-between gap-2">
+        <span>© 2026 BMSTU Forum — учебный проект VK Education</span>
+        <a href="index.html">На главную</a>
+    </div>
+</footer>
+<script src="static/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

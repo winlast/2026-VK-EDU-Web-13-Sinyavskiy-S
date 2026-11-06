@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Регистрация — BMSTU Forum</title>
+    <link rel="icon" type="image/svg+xml" href="static/img/favicon.svg">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+<header class="site-header navbar navbar-expand-lg navbar-dark py-2">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <img src="static/img/favicon.svg" alt="">
+            BMSTU Forum
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#headerMenu" aria-controls="headerMenu" aria-expanded="false" aria-label="Открыть меню">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse gap-3" id="headerMenu">
+            <form class="header-search d-flex mx-lg-auto my-2 my-lg-0" role="search" action="index.html">
+                <input class="form-control" type="search" name="q" placeholder="Поиск по вопросам" aria-label="Поиск" maxlength="100">
+            </form>
+            <a href="ask.html" class="btn btn-warning btn-ask">Задать вопрос</a>
+            <div class="user-block">
+                <a href="login.html" class="btn btn-sm btn-outline-light">Войти</a>
+                <a href="signup.html" class="btn btn-sm btn-light text-primary">Регистрация</a>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container flex-grow-1 py-4">
+    <div class="row g-4">
+        <main class="col-lg-9">
+            <div class="row justify-content-center">
+                <div class="col-md-9 col-xl-7">
+                    <h1 class="h3 mb-3">Регистрация</h1>
+                    <form class="form-card" action="signup.html" method="post" enctype="multipart/form-data" novalidate>
+                        <div class="alert alert-danger" role="alert">
+                            Не удалось зарегистрироваться: проверьте поля формы.
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupLogin" class="form-label">Логин</label>
+                            <input type="text" class="form-control" id="signupLogin" name="login" maxlength="30" autocomplete="username" aria-describedby="signupLoginHelp">
+                            <div id="signupLoginHelp" class="form-text">Латиница, цифры и _, от 3 до 30 символов.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control is-invalid" id="signupEmail" name="email" maxlength="254" value="stanislav@bmstu" autocomplete="email" aria-describedby="signupEmailError">
+                            <div id="signupEmailError" class="invalid-feedback">Введите корректный email, например name@mail.ru.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="signupNick" class="form-label">Никнейм</label>
+                            <input type="text" class="form-control" id="signupNick" name="nickname" maxlength="40" aria-describedby="signupNickHelp">
+                            <div id="signupNickHelp" class="form-text">Так вас будут видеть другие участники, до 40 символов.</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 mb-3">
+                                <label for="signupPassword" class="form-label">Пароль</label>
+                                <input type="password" class="form-control" id="signupPassword" name="password" maxlength="128" autocomplete="new-password" aria-describedby="signupPasswordHelp">
+                                <div id="signupPasswordHelp" class="form-text">Минимум 8 символов.</div>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <label for="signupPassword2" class="form-label">Повтор пароля</label>
+                                <input type="password" class="form-control is-invalid" id="signupPassword2" name="password_repeat" maxlength="128" autocomplete="new-password" aria-describedby="signupPassword2Error">
+                                <div id="signupPassword2Error" class="invalid-feedback">Пароли не совпадают.</div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="signupAvatar" class="form-label">Аватар</label>
+                            <input type="file" class="form-control" id="signupAvatar" name="avatar" accept="image/png, image/jpeg" aria-describedby="signupAvatarHelp">
+                            <div id="signupAvatarHelp" class="form-text">PNG или JPG до 2 МБ. Можно добавить позже.</div>
+                        </div>
+                        <div class="d-flex flex-wrap align-items-center gap-3">
+                            <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                            <span>Уже есть аккаунт? <a href="login.html">Войти</a></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+        <aside class="col-lg-3 d-flex flex-column gap-3">
+            <section class="sidebar-block">
+                <h5>Популярные теги</h5>
+                <ul class="tags tags--cloud">
+                    <li><a href="tag.html" class="tag-big">python</a></li>
+                    <li><a href="tag.html">django</a></li>
+                    <li><a href="tag.html" class="tag-big">сессия</a></li>
+                    <li><a href="tag.html">ИУ5</a></li>
+                    <li><a href="tag.html">технопарк</a></li>
+                    <li><a href="tag.html" class="tag-big">матан</a></li>
+                    <li><a href="tag.html">общага</a></li>
+                    <li><a href="tag.html">c++</a></li>
+                    <li><a href="tag.html">mysql</a></li>
+                    <li><a href="tag.html">стипендия</a></li>
+                </ul>
+            </section>
+            <section class="sidebar-block">
+                <h5>Лучшие участники</h5>
+                <ul class="members">
+                    <li><a href="#"><img src="static/img/avatar-1.svg" alt="">Анна Королёва</a></li>
+                    <li><a href="#"><img src="static/img/avatar-2.svg" alt="">Максим Петров</a></li>
+                    <li><a href="#"><img src="static/img/avatar-3.svg" alt="">Илья Смирнов</a></li>
+                    <li><a href="#"><img src="static/img/avatar-4.svg" alt="">Екатерина Волкова</a></li>
+                    <li><a href="#"><img src="static/img/avatar-5.svg" alt="">Дмитрий Романов</a></li>
+                </ul>
+            </section>
+        </aside>
+    </div>
+</div>
+<footer class="site-footer mt-auto py-3">
+    <div class="container d-flex flex-wrap justify-content-between gap-2">
+        <span>© 2026 BMSTU Forum — учебный проект VK Education</span>
+        <a href="index.html">На главную</a>
+    </div>
+</footer>
+<script src="static/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
