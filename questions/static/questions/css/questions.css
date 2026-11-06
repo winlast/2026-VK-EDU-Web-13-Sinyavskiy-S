@@ -1,0 +1,107 @@
+/* ---------- Карточки вопросов и ответов ---------- */
+
+.question-card,
+.answer-card,
+.question-full {
+    background: #fff;
+    border: 1px solid var(--forum-border);
+    border-radius: 12px;
+}
+
+.question-card__avatar,
+.answer-card__avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.question-full__avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.question-card__title {
+    font-size: 1.15rem;
+    margin-bottom: 4px;
+}
+
+.question-card__title a {
+    color: #1d2a44;
+    text-decoration: none;
+}
+
+.question-card__title a:hover {
+    color: var(--forum-blue);
+}
+
+/* длинный текст без пробелов не ломает карточку */
+.question-card__title,
+.question-card__text,
+.question-full__text,
+.answer-card__text {
+    overflow-wrap: anywhere;
+}
+
+.question-card__text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: #4a5568;
+}
+
+.question-meta {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* ---------- Лайки ---------- */
+
+.vote {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    width: 64px;
+}
+
+.vote__btn {
+    width: 36px;
+    height: 30px;
+    padding: 0;
+    line-height: 1;
+}
+
+.vote__count {
+    font-weight: 700;
+}
+
+/* ---------- Ответы ---------- */
+
+.answer-card--correct {
+    border-color: #198754;
+    box-shadow: 0 0 0 1px #198754;
+}
+
+/* ---------- Адаптив ---------- */
+
+@media (max-width: 575.98px) {
+    .question-card__avatar,
+    .answer-card__avatar {
+        width: 44px;
+        height: 44px;
+    }
+
+    .question-full__avatar {
+        width: 64px;
+        height: 64px;
+    }
+
+    .vote {
+        width: 44px;
+    }
+}

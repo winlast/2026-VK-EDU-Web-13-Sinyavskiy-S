@@ -1,0 +1,9 @@
+{% extends 'questions/listing.html' %}
+
+{% block title %}Тег: {{ tag }}{% endblock %}
+
+{% block heading %}Вопросы с тегом «{{ tag }}»{% endblock %}
+
+{% block heading_link %}
+    <a href="{% url 'index' %}">Все вопросы</a>
+{% endblock %}

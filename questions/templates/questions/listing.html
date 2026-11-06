@@ -1,0 +1,21 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'questions/css/questions.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-wrap align-items-baseline gap-3 mb-3">
+    <h1 class="h3 page-title">{% block heading %}{% endblock %}</h1>
+    {% block heading_link %}{% endblock %}
+</div>
+
+<div class="d-flex flex-column gap-3 mb-4">
+    {% for question in page %}
+        {% include 'questions/includes/question_card.html' %}
+    {% endfor %}
+</div>
+
+{% include 'core/includes/pagination.html' with label='Страницы вопросов' %}
+{% endblock %}

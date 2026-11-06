@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}{{ question.title }}{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'questions/css/questions.css' %}">
+{% endblock %}
+
+{% block content %}
+<article class="question-full p-3 p-md-4 mb-4">
+    <div class="d-flex gap-3">
+        <div class="d-flex flex-column align-items-center gap-2">
+            <img src="{% static question.author.avatar %}" class="question-full__avatar" alt="Аватар: {{ question.author.name }}">
+            {% include 'questions/includes/vote.html' with item=question %}
+        </div>
+        <div class="flex-grow-1 min-w-0">
+            <h1 class="h3">{{ question.title }}</h1>
+            <p class="question-full__text">{{ question.text }}</p>
+            <div class="d-flex flex-wrap align-items-center gap-3 question-meta">
+                <span>Ответов: {{ question.answers_count }}</span>
+                {% include 'questions/includes/tags.html' with tags=question.tags %}
+                <span>{{ question.author.name }}</span>
+                <time datetime="{{ question.created_at|date:'c' }}" class="ms-sm-auto">{{ question.created_at|date:'j E, H:i' }}</time>
+            </div>
+        </div>
+    </div>
+</article>
+
+<h2 class="h5 mb-3" id="answers">Ответы</h2>
+<div class="d-flex flex-column gap-3 mb-4">
+    {% for answer in page %}
+        {% include 'questions/includes/answer_card.html' %}
+    {% empty %}
+        <p class="text-secondary">Пока никто не ответил. Будьте первым!</p>
+    {% endfor %}
+</div>
+
+{% include 'core/includes/pagination.html' with label='Страницы ответов' anchor='#answers' %}
+
+<form class="form-card mt-4" action="{% url 'question' question.id %}" method="post">
+    {% csrf_token %}
+    <h2 class="h5">Ваш ответ</h2>
+    <label for="answerText" class="visually-hidden">Текст ответа</label>
+    <textarea class="form-control mb-1" id="answerText" name="text" rows="5" maxlength="3000" placeholder="Напишите ответ..." aria-describedby="answerHelp"></textarea>
+    <div id="answerHelp" class="form-text mb-3">До 3000 символов. Будьте вежливы и по делу.</div>
+    <button type="submit" class="btn btn-primary">Ответить</button>
+</form>
+{% endblock %}
