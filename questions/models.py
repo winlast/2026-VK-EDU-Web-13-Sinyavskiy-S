@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core.validators import RegexValidator
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
 from .managers import AnswerQuerySet, QuestionQuerySet, TagQuerySet
 
@@ -32,7 +33,7 @@ class Question(models.Model):
     )
     title = models.CharField('заголовок', max_length=120)
     text = models.TextField('текст', max_length=3000)
-    created_at = models.DateTimeField('создан', auto_now_add=True)
+    created_at = models.DateTimeField('создан', default=timezone.now, editable=False)
     tags = models.ManyToManyField(Tag, related_name='questions', blank=True, verbose_name='теги')
     objects = QuestionQuerySet.as_manager()
 
@@ -57,7 +58,7 @@ class Answer(models.Model):
         related_name='answers', verbose_name='автор',
     )
     text = models.TextField('текст', max_length=3000)
-    created_at = models.DateTimeField('создан', auto_now_add=True, db_index=True)
+    created_at = models.DateTimeField('создан', default=timezone.now, editable=False, db_index=True)
     is_correct = models.BooleanField('правильный ответ', default=False)
     objects = AnswerQuerySet.as_manager()
 

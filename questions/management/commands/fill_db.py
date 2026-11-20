@@ -1,3 +1,4 @@
+from datetime import timedelta
 from random import Random
 from uuid import uuid4
 
@@ -6,6 +7,7 @@ from django.contrib.auth.hashers import make_password
 from django.core.cache import cache
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
+from django.utils import timezone
 from faker import Faker
 
 from core.models import Profile
@@ -79,12 +81,14 @@ def populate(ratio):
     answer_votes, extra_votes = divmod(200 * ratio - question_votes * 10 * ratio, 100 * ratio)
     through = Question.tags.through
     answer_offset = 0
+    now = timezone.now()
 
     for start in range(0, 10 * ratio, QUESTION_BATCH_SIZE):
         numbers = range(start, min(start + QUESTION_BATCH_SIZE, 10 * ratio))
         questions = Question.objects.bulk_create([
             Question(
                 author_id=rng.choice(users), title=TOPICS[i % len(TOPICS)][1],
+                created_at=now - timedelta(days=i % 365, hours=2),
                 text=f'{rng.choice(details)}\n\nОбсуждение №{i + 1}.',
             )
             for i in numbers
@@ -98,6 +102,7 @@ def populate(ratio):
 
         answers = Answer.objects.bulk_create([
             Answer(question_id=question.pk, author_id=rng.choice(users), text=rng.choice(replies),
+                   created_at=question.created_at + timedelta(minutes=n + 1),
                    is_correct=(n == 0 and i % 3 == 0))
             for i, question in zip(numbers, questions)
             for n in range(ANSWERS_PER_TOPIC[i % len(ANSWERS_PER_TOPIC)])
