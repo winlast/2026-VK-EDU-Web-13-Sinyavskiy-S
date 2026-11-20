@@ -1,5 +1,6 @@
-<div class="vote">
-    <button type="button" class="btn btn-sm {% if item.vote == 'up' %}btn-success{% else %}btn-outline-success{% endif %} vote__btn" disabled aria-label="Нравится" aria-pressed="{% if item.vote == 'up' %}true{% else %}false{% endif %}">▲</button>
-    <span class="vote__count">{{ item.rating }}</span>
-    <button type="button" class="btn btn-sm {% if item.vote == 'down' %}btn-danger{% else %}btn-outline-danger{% endif %} vote__btn" disabled aria-label="Не нравится" aria-pressed="{% if item.vote == 'down' %}true{% else %}false{% endif %}">▼</button>
+<div class="vote" data-vote-url="{{ vote_url }}"{% if not user.is_authenticated %} title="Войдите, чтобы оценить"{% endif %}>
+    <button type="button" data-value="1" class="btn btn-sm {% if item.user_vote == 1 %}btn-success{% else %}btn-outline-success{% endif %} vote__btn" aria-label="Нравится" aria-pressed="{% if item.user_vote == 1 %}true{% else %}false{% endif %}"{% if not user.is_authenticated %} disabled{% endif %}>▲</button>
+    <span class="vote__count" aria-live="polite">{{ item.rating }}</span>
+    <button type="button" data-value="-1" class="btn btn-sm {% if item.user_vote == -1 %}btn-danger{% else %}btn-outline-danger{% endif %} vote__btn" aria-label="Не нравится" aria-pressed="{% if item.user_vote == -1 %}true{% else %}false{% endif %}"{% if not user.is_authenticated %} disabled{% endif %}>▼</button>
+    <span class="visually-hidden" data-feedback role="status"></span>
 </div>

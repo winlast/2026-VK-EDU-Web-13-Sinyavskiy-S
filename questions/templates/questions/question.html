@@ -12,7 +12,8 @@
     <div class="d-flex gap-3">
         <div class="d-flex flex-column align-items-center gap-2">
             {% include 'core/includes/avatar.html' with member=question.author css_class='question-full__avatar' %}
-            {% include 'questions/includes/vote.html' with item=question %}
+            {% url 'vote-question' question.pk as vote_url %}
+            {% include 'questions/includes/vote.html' with item=question vote_url=vote_url %}
         </div>
         <div class="flex-grow-1 min-w-0">
             <h1 class="h3">{{ question.title }}</h1>
@@ -38,12 +39,16 @@
 
 {% include 'core/includes/pagination.html' with label='Страницы ответов' anchor='#answers' %}
 
-<form class="form-card mt-4" action="{{ question.get_absolute_url }}" method="post">
-    {% csrf_token %}
-    <h2 class="h5">Ваш ответ</h2>
-    <label for="answerText" class="visually-hidden">Текст ответа</label>
-    <textarea class="form-control mb-1" id="answerText" name="text" rows="5" maxlength="3000" placeholder="Напишите ответ..." aria-describedby="answerHelp"></textarea>
-    <div id="answerHelp" class="form-text mb-3">До 3000 символов. Будьте вежливы и по делу.</div>
-    <button type="submit" class="btn btn-primary">Ответить</button>
-</form>
+{% if user.is_authenticated %}
+    <form class="form-card mt-4" id="answer-form" method="post">
+        {% csrf_token %}
+        <h2 class="h5">Ваш ответ</h2>
+        {% include 'core/includes/form_fields.html' %}
+        <button type="submit" class="btn btn-primary">Ответить</button>
+    </form>
+{% else %}
+    <p class="mt-4">
+        <a href="{% url 'login' %}?next={{ request.get_full_path|urlencode:'' }}">Войдите</a>, чтобы ответить.
+    </p>
+{% endif %}
 {% endblock %}

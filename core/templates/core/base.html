@@ -15,6 +15,9 @@
 <div class="container flex-grow-1 py-4">
     <div class="row g-4">
         <main class="col-lg-9">
+            {% for message in messages %}
+                <div class="alert alert-success" role="status">{{ message }}</div>
+            {% endfor %}
             {% block content %}{% endblock %}
         </main>
         {% include 'core/includes/sidebar.html' %}
@@ -23,5 +26,9 @@
 
 {% include 'core/includes/footer.html' %}
 <script src="{% static 'core/js/bootstrap.bundle.min.js' %}"></script>
+{% if user.is_authenticated %}
+    <span data-forum-login="{% url 'login' %}" hidden></span>
+    <script src="{% static 'questions/js/actions.js' %}" defer></script>
+{% endif %}
 </body>
 </html>

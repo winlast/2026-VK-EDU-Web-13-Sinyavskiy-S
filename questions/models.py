@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.utils import timezone
 
 from .managers import AnswerQuerySet, QuestionQuerySet, TagQuerySet
+from .utils import ANSWERS_PER_PAGE
 
 
 class Tag(models.Model):
@@ -74,6 +75,11 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.text[:80]
+
+    def get_absolute_url(self):
+        page = Answer.objects.position(self) // ANSWERS_PER_PAGE + 1
+        url = reverse('question', args=[self.question_id])
+        return f'{url}?page={page}#answer-{self.pk}'
 
 
 class Vote(models.Model):
