@@ -1,0 +1,8 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Страница не найдена{% endblock %}
+{% block content %}
+<h1 class="h3">Страница не найдена</h1>
+<p>Проверьте адрес или вернитесь к списку вопросов.</p>
+<a href="{% url 'index' %}" class="btn btn-primary">К вопросам</a>
+{% endblock %}

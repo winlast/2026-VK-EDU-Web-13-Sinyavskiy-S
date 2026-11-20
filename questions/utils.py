@@ -1,6 +1,10 @@
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 
+QUESTIONS_PER_PAGE = 20
+ANSWERS_PER_PAGE = 30
+
+
 def paginate(objects_list, request, per_page=10):
     paginator = Paginator(objects_list, per_page)
     page_number = request.GET.get('page', 1)
@@ -21,4 +25,9 @@ def paginate(objects_list, request, per_page=10):
     page.elided_page_range = paginator.get_elided_page_range(
         page.number, on_each_side=2, on_ends=1,
     )
+    query = request.GET.copy()
+    query.pop('page', None)
+    page.query_prefix = query.urlencode()
+    if page.query_prefix:
+        page.query_prefix += '&'
     return page

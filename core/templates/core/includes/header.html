@@ -10,12 +10,12 @@
         </button>
         <div class="collapse navbar-collapse gap-3" id="headerMenu">
             <form class="header-search d-flex mx-lg-auto my-2 my-lg-0" role="search" action="{% url 'index' %}">
-                <input class="form-control" type="search" name="q" placeholder="Поиск по вопросам" aria-label="Поиск" maxlength="100">
+                <input class="form-control" type="search" name="q" placeholder="Поиск по вопросам" aria-label="Поиск" maxlength="100" value="{{ search }}">
             </form>
             <a href="{% url 'ask' %}" class="btn btn-warning btn-ask">Задать вопрос</a>
             {% if user.is_authenticated %}
                 <div class="user-block">
-                    <img src="{% static 'core/img/bmstu.jpg' %}" alt="Аватар пользователя">
+                    {% include 'core/includes/avatar.html' with member=user alt='Аватар пользователя' %}
                     <div>
                         <div class="user-block__name">{{ user.username }}</div>
                         <a href="{% url 'profile' %}">Настройки</a>
