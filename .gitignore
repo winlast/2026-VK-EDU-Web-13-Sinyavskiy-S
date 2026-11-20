@@ -25,6 +25,8 @@ db.sqlite3
 
 # Переменные окружения (пример лежит в .env.example)
 .env
+.env.*
+!.env.example
 
 # Логи
 *.log

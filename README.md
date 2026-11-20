@@ -1,99 +1,46 @@
 # BMSTU Forum
 
-Учебный проект по курсу «Веб-технологии» (VK Education, осень 2026).
-Сервис вопросов и ответов в духе Stack Overflow для студентов Бауманки.
+Учебный форум вопросов и ответов о Бауманке. Макеты ДЗ1 открываются из `public/index.html`. Django-версия читает вопросы, ответы, теги и рейтинги из PostgreSQL.
 
-Автор: Синявский Станислав, группа Web-13.
+## Запуск через Docker Compose
 
-## Запуск
-
-### Локально (venv)
-
-Нужен Python 3.12+.
+1. Скопируйте `.env.example` в `.env.docker` и поменяйте `SECRET_KEY` и `POSTGRES_PASSWORD`.
+2. Соберите и запустите сервисы.
 
 ```bash
-git clone https://github.com/winlast/2026-VK-EDU-Web-13-Sinyavskiy-S.git
-cd 2026-VK-EDU-Web-13-Sinyavskiy-S
+docker compose up --build -d --wait
+```
 
+Сайт доступен на [localhost:8000](http://localhost:8000/). Миграции выполняются при старте web. PostgreSQL доступен локально на порту 5433, внутри Compose — по адресу `db:5432`. База и загруженные файлы хранятся в отдельных томах.
+
+## Запуск с Python 3.12
+
+Создайте в PostgreSQL пустую БД и пользователя или запустите только БД командой `docker compose up -d --wait db`. Скопируйте `.env.example` в `.env.local` и укажите настройки подключения. Если используете БД от Compose, поставьте `DB_HOST=localhost`, `DB_PORT=5433` и те же `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, что в `.env.docker`.
+
+```bash
 python3 -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
+. .venv/bin/activate
 pip install -r requirements.txt
-
-cp .env.example .env             # при желании поменять SECRET_KEY
 python manage.py migrate
 python manage.py runserver
 ```
 
-Сайт откроется на http://127.0.0.1:8000/
-
-### Через Docker Compose
+## Тестовые данные, админка и тесты
 
 ```bash
-cp .env.example .env
-docker compose up --build
-```
-
-Сайт откроется на http://localhost:8000/ (миграции применяются при старте контейнера).
-Код примонтирован в контейнер, поэтому изменения подхватываются без пересборки.
-Загруженные файлы хранятся в volume `media`.
-
-### Как посмотреть шапку авторизованного пользователя
-
-Регистрация появится в ДЗ4, а пока можно войти через админку:
-
-```bash
+python manage.py fill_db 10
 python manage.py createsuperuser
-```
-
-Войти на http://127.0.0.1:8000/admin/ и вернуться на сайт — в шапке появится
-юзерблок с ником, ссылкой на настройки и кнопкой «Выйти».
-
-### Тесты
-
-```bash
 python manage.py test
 ```
 
+В Docker добавьте перед каждой командой префикс `docker compose exec web`. Админка доступна по `/admin/`. Debug Toolbar включается в режиме `DEBUG=True`. Для запуска тестов пользователь PostgreSQL должен иметь право создания тестовой базы.
+
+`fill_db` добавляет новые данные, сохраняя существующие. При коэффициенте `ratio` создаются `ratio` пользователей, `10 × ratio` вопросов, `100 × ratio` ответов, `ratio` тегов и `200 × ratio` оценок. Для ratio нужно указать целое число от 2. Для набора на весь объём используйте `fill_db 10001`. Демонстрационные аккаунты не имеют паролей для входа.
+
 ## Страницы
 
-| URL | Имя маршрута | Страница |
-|---|---|---|
-| `/` | `index` | новые вопросы |
-| `/hot/` | `hot` | популярные вопросы |
-| `/tag/<tag_name>/` | `tag` | вопросы по тегу, например `/tag/python/` |
-| `/question/<id>/` | `question` | вопрос с ответами, например `/question/35/` |
-| `/ask/` | `ask` | форма создания вопроса |
-| `/login/` | `login` | форма входа |
-| `/signup/` | `signup` | форма регистрации |
-| `/profile/` | `profile` | настройки профиля |
-| `/logout/` | `logout` | выход (POST) |
-
-У списков есть пагинация: `?page=N`. Некорректный номер (`?page=abc`, `?page=0`)
-заменяется на первую страницу, слишком большой — на последнюю.
-
-## Структура
-
-```
-├── application/          настройки проекта (settings.py, urls.py)
-├── core/                 пользователи: вход, регистрация, профиль
-│   ├── templates/core/   base.html, includes (шапка, сайдбар, пагинатор), формы
-│   └── static/core/      Bootstrap, общие стили, картинки
-├── questions/            вопросы: списки, страница вопроса, создание вопроса
-│   ├── templates/questions/
-│   ├── static/questions/
-│   ├── data.py           данные-заглушки (в ДЗ3 заменятся на БД)
-│   └── utils.py          функция paginate()
-├── public/               статическая верстка из ДЗ1
-├── Dockerfile
-├── docker-compose.yml
-├── requirements.txt
-└── .env.example
-```
-
-## ДЗ 1. Статическая верстка
-
-Верстка лежит в `public/`, статика — в `public/static/` (Bootstrap подключен локально).
-Открыть `public/index.html` в браузере или запустить `python3 -m http.server` из папки `public/`.
-
-Страницы: `base.html`, `index.html`, `hot.html`, `tag.html`, `question.html`,
-`ask.html`, `login.html`, `signup.html`, `profile.html`.
+- `/` — новые вопросы и поиск по заголовку и тексту.
+- `/hot/` — популярные вопросы.
+- `/tag/<название>/` — вопросы по тегу.
+- `/question/<id>/` — вопрос и список ответов.
+- `/ask/`, `/login/`, `/signup/`, `/profile/` — макеты форм для ДЗ4.

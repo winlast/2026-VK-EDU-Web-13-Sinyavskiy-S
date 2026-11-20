@@ -11,7 +11,7 @@
 <article class="question-full p-3 p-md-4 mb-4">
     <div class="d-flex gap-3">
         <div class="d-flex flex-column align-items-center gap-2">
-            <img src="{% static question.author.avatar %}" class="question-full__avatar" alt="Аватар: {{ question.author.name }}">
+            {% include 'core/includes/avatar.html' with member=question.author css_class='question-full__avatar' %}
             {% include 'questions/includes/vote.html' with item=question %}
         </div>
         <div class="flex-grow-1 min-w-0">
@@ -19,8 +19,8 @@
             <p class="question-full__text">{{ question.text }}</p>
             <div class="d-flex flex-wrap align-items-center gap-3 question-meta">
                 <span>Ответов: {{ question.answers_count }}</span>
-                {% include 'questions/includes/tags.html' with tags=question.tags %}
-                <span>{{ question.author.name }}</span>
+                {% include 'questions/includes/tags.html' with tags=question.tags.all %}
+                <span>{{ question.author.first_name|default:question.author.username }}</span>
                 <time datetime="{{ question.created_at|date:'c' }}" class="ms-sm-auto">{{ question.created_at|date:'j E, H:i' }}</time>
             </div>
         </div>
@@ -38,7 +38,7 @@
 
 {% include 'core/includes/pagination.html' with label='Страницы ответов' anchor='#answers' %}
 
-<form class="form-card mt-4" action="{% url 'question' question.id %}" method="post">
+<form class="form-card mt-4" action="{{ question.get_absolute_url }}" method="post">
     {% csrf_token %}
     <h2 class="h5">Ваш ответ</h2>
     <label for="answerText" class="visually-hidden">Текст ответа</label>

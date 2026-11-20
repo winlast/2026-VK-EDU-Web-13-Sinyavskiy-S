@@ -1,35 +1,31 @@
-from django.http import Http404
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
-from . import data
-from .utils import paginate
+from .models import Answer, Question, Tag
+from .utils import ANSWERS_PER_PAGE, QUESTIONS_PER_PAGE, paginate
+
+
+def listing(request, template, questions, **context):
+    search = request.GET.get('q', '').strip()[:100]
+    page = paginate(questions.search(search), request, per_page=QUESTIONS_PER_PAGE)
+    return render(request, template, {'page': page, 'search': search, **context})
 
 
 def index(request):
-    page = paginate(data.get_new_questions(), request)
-    return render(request, 'questions/index.html', {'page': page})
+    return listing(request, 'questions/index.html', Question.objects.newest())
 
 
 def hot(request):
-    page = paginate(data.get_hot_questions(), request)
-    return render(request, 'questions/hot.html', {'page': page})
+    return listing(request, 'questions/hot.html', Question.objects.hottest())
 
 
 def tag(request, tag_name):
-    questions = data.get_questions_by_tag(tag_name)
-    if not questions:
-        raise Http404('Тег не найден')
-
-    page = paginate(questions, request)
-    return render(request, 'questions/tag.html', {'page': page, 'tag': tag_name})
+    item = get_object_or_404(Tag, name=tag_name)
+    return listing(request, 'questions/tag.html', Question.objects.by_tag(item), tag=item)
 
 
 def question(request, question_id):
-    item = data.get_question(question_id)
-    if item is None:
-        raise Http404('Вопрос не найден')
-
-    page = paginate(data.get_answers(item), request, per_page=5)
+    item = get_object_or_404(Question.objects.with_cards(), pk=question_id)
+    page = paginate(Answer.objects.for_question(item), request, per_page=ANSWERS_PER_PAGE)
     return render(request, 'questions/question.html', {'question': item, 'page': page})
 
 

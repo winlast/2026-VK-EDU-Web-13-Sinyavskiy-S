@@ -1,0 +1,2 @@
+{% load static %}
+<img src="{% if member.profile.avatar %}{{ member.profile.avatar.url }}{% else %}{% static 'core/img/avatar-default.png' %}{% endif %}"{% if css_class %} class="{{ css_class }}"{% endif %} alt="{{ alt|default:'' }}">
