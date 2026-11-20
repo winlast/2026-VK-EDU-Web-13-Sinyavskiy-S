@@ -3,7 +3,7 @@ from io import StringIO
 from django.core.cache import cache
 from django.core.management import call_command
 from django.contrib.auth import get_user_model
-from django.test import RequestFactory, SimpleTestCase, TestCase
+from django.test import Client, RequestFactory, SimpleTestCase, TestCase
 from django.urls import reverse
 
 from .models import Answer, AnswerLike, Question, QuestionLike, Tag
@@ -59,10 +59,8 @@ class PagesTests(TestCase):
             reverse('hot'),
             reverse('tag', args=['python']),
             self.question.get_absolute_url(),
-            reverse('ask'),
             reverse('login'),
             reverse('signup'),
-            reverse('profile'),
         ]
         for url in urls:
             with self.subTest(url=url):
@@ -120,3 +118,78 @@ class HeaderTests(TestCase):
         self.client.force_login(user)
         response = self.client.post(reverse('logout'))
         self.assertRedirects(response, reverse('index'))
+
+
+class WriteTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        users = get_user_model().objects
+        cls.author = users.create_user(username='author')
+        cls.member = users.create_user(username='member')
+        cls.question = Question.objects.create(author=cls.author, title='Вопрос', text='Текст')
+        cls.answer = Answer.objects.create(question=cls.question, author=cls.member, text='Один ответ')
+
+    def test_ask_rejects_invalid_tags_and_saves_valid_question(self):
+        ask = reverse('ask')
+        self.assertEqual(self.client.get(ask).status_code, 302)
+        self.client.force_login(self.member)
+        data = {'title': 'Новый вопрос', 'text': 'Его текст', 'tags': 'один, два, три, четыре'}
+        failed = self.client.post(ask, data)
+        self.assertTrue(failed.context['form'].errors.get('tags'))
+        self.assertContains(failed, 'Новый вопрос')
+        response = self.client.post(ask, {**data, 'tags': ' Python, python, иу5 '})
+        item = Question.objects.get(title='Новый вопрос')
+        self.assertRedirects(response, item.get_absolute_url())
+        self.assertEqual(item.author, self.member)
+        self.assertEqual(set(item.tags.values_list('name', flat=True)), {'python', 'иу5'})
+
+    def test_answer_appears_on_correct_page(self):
+        QuestionLike.objects.create(question=self.question, user=self.author, value=1)
+        answers = Answer.objects.bulk_create([
+            Answer(question=self.question, author=self.author, text=f'Старый ответ {i}')
+            for i in range(31)
+        ])
+        AnswerLike.objects.bulk_create([
+            AnswerLike(answer=answer, user=self.member, value=1) for answer in answers
+        ])
+        url = self.question.get_absolute_url()
+        self.assertEqual(self.client.post(url, {'text': 'Гость'}).status_code, 302)
+        self.client.force_login(self.member)
+        failed = self.client.post(url, {'text': '   '})
+        self.assertTrue(failed.context['form'].errors.get('text'))
+        result = self.client.post(url, {'text': 'Новый ответ'})
+        new_answer = Answer.objects.get(text='Новый ответ')
+        self.assertRedirects(result, f'{url}?page=2#answer-{new_answer.pk}')
+        self.assertContains(self.client.get(f'{url}?page=2'), f'id="answer-{new_answer.pk}"')
+
+    def test_vote_can_be_repeated_changed_or_removed(self):
+        url = reverse('vote-question', args=[self.question.pk])
+        self.assertEqual(self.client.post(url, {'value': 1}).status_code, 401)
+        self.client.force_login(self.member)
+        self.assertEqual(self.client.get(url).status_code, 405)
+        self.assertEqual(self.client.post(url, {'value': 2}).status_code, 400)
+        self.assertEqual(Client(enforce_csrf_checks=True).post(url, {'value': 1}).status_code, 403)
+        for value in (1, 1, -1, 0):
+            response = self.client.post(url, {'value': value})
+            self.assertEqual(response.json(), {'rating': value, 'value': value})
+            self.assertEqual(QuestionLike.objects.filter(question=self.question).count(), bool(value))
+        answer_url = reverse('vote-answer', args=[self.answer.pk])
+        self.assertEqual(self.client.post(answer_url, {'value': -1}).json(), {'rating': -1, 'value': -1})
+        self.assertContains(self.client.get(self.question.get_absolute_url()), 'aria-pressed="true"')
+
+    def test_only_question_author_can_mark_one_answer(self):
+        url = reverse('correct-answer', args=[self.question.pk, self.answer.pk])
+        self.client.force_login(self.member)
+        self.assertEqual(self.client.post(url, {'correct': 'true'}).status_code, 403)
+        self.client.force_login(self.author)
+        self.assertEqual(self.client.post(url, {'correct': 'unexpected'}).status_code, 400)
+        self.assertEqual(self.client.post(url, {'correct': 'true'}).json()['correct_answer_id'], self.answer.pk)
+        second = Answer.objects.create(question=self.question, author=self.member, text='Второй ответ')
+        url = reverse('correct-answer', args=[self.question.pk, second.pk])
+        self.assertEqual(self.client.post(url, {'correct': 'true'}).json()['correct_answer_id'], second.pk)
+        self.answer.refresh_from_db()
+        self.assertFalse(self.answer.is_correct)
+        self.assertIsNone(self.client.post(url, {'correct': 'false'}).json()['correct_answer_id'])
+        other = Question.objects.create(author=self.author, title='Другой вопрос', text='Текст')
+        url = reverse('correct-answer', args=[other.pk, self.answer.pk])
+        self.assertEqual(self.client.post(url, {'correct': 'true'}).status_code, 404)

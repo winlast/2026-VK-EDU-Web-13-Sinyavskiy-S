@@ -11,12 +11,24 @@ def related_total(model, field, aggregate):
     return Coalesce(Subquery(totals), 0)
 
 
+def with_personal_vote(queryset, model, field, user):
+    if not user.is_authenticated:
+        return queryset
+    vote = model.objects.filter(**{field: OuterRef('pk')}, user=user).values('value')
+    return queryset.annotate(user_vote=Coalesce(Subquery(vote), models.Value(0), output_field=models.IntegerField()))
+
+
 class TagQuerySet(models.QuerySet):
     def popular(self):
         return self.annotate(usage=Count('questions')).filter(usage__gt=0).order_by('-usage', 'name')
 
 
 class QuestionQuerySet(models.QuerySet):
+    def with_user_vote(self, user):
+        from .models import QuestionLike
+
+        return with_personal_vote(self, QuestionLike, 'question', user)
+
     def with_rating(self):
         from .models import QuestionLike
 
@@ -46,10 +58,24 @@ class QuestionQuerySet(models.QuerySet):
 
 
 class AnswerQuerySet(models.QuerySet):
+    def with_user_vote(self, user):
+        from .models import AnswerLike
+
+        return with_personal_vote(self, AnswerLike, 'answer', user)
+
     def with_rating(self):
         from .models import AnswerLike
 
         return self.annotate(rating=related_total(AnswerLike, 'answer', Sum('value')))
+
+    def position(self, answer):
+        rating = self.with_rating().filter(pk=answer.pk).values_list('rating', flat=True).get()
+        before = (
+            models.Q(rating__gt=rating)
+            | models.Q(rating=rating, created_at__gt=answer.created_at)
+            | models.Q(rating=rating, created_at=answer.created_at, pk__gt=answer.pk)
+        )
+        return self.with_rating().filter(question_id=answer.question_id).filter(before).count()
 
     def for_question(self, question):
         return (
